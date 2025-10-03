@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, Suspense } from 'react'
 import { UserDetailContext } from '../_context/UserDetailContext'
 import Prompt from '../_data/Prompt';
 import axios from 'axios';
@@ -9,8 +9,9 @@ import Lookup from '../_data/Lookup';
 import { DownloadIcon, LayoutDashboard, LoaderIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
-function GenerateLogo() {
+function GenerateLogoInner() {
   const {userDetail, setuserDetail} = useContext(UserDetailContext);
   const [formData, setFormData] = useState();
   const [loading, setLoading] = useState(false);
@@ -132,12 +133,16 @@ function GenerateLogo() {
 
         <div className='mt-4 flex items-center gap-5'>
           <Button onClick={() =>onDownload()}> <DownloadIcon/> Download </Button>
-          <Button variant="outline"> <LayoutDashboard/> Dashboard</Button>
+          <Link href="/dashboard">
+            <Button variant="outline"> <LayoutDashboard/> Dashboard</Button>
+          </Link>
         </div>
         </div>}
     </div>
   )
 }
+
+
 
 // function GenerateLogo() {
 //   const {userDetail, setuserDetail} = useContext(UserDetailContext);
@@ -195,4 +200,10 @@ function GenerateLogo() {
 //   )
 // }
 
-export default GenerateLogo
+export default function GenerateLogo() {
+  return (
+    <Suspense fallback={null}>
+      <GenerateLogoInner />
+    </Suspense>
+  );
+}
