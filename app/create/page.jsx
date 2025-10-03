@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import LogoTitle from './_components/LogoTitle'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
@@ -33,7 +33,10 @@ const CreateLogo = () => {
   return (
     <div className='mt-28 p-10 border rounded-xl 2xl:mx-72 '>
       {step == 1 ?
-          <LogoTitle onHandleInputChange={(v) => onHandleInputChange('title', v)} formData={formData} /> :
+          // <LogoTitle onHandleInputChange={(v) => onHandleInputChange('title', v)} formData={formData} /> :
+          <Suspense fallback={null}>
+            <LogoTitle onHandleInputChange={(v) => onHandleInputChange('title', v)} formData={formData} />
+          </Suspense> :
        step == 2 ?
           <LogoDesc onHandleInputChange={(v) => onHandleInputChange('desc', v)} formData={formData} /> :
        step == 3 ?
